@@ -1,5 +1,5 @@
-from RegexToNFA import regex_to_nfa
-from AutomataGraph import AutomataGraph
+from .RegexToNFA import regex_to_nfa
+from .AutomataGraph import AutomataGraph
 
 def e_closure_s(data, state, symbol='E'):
     res = [state] if symbol == 'E' else []
@@ -29,7 +29,7 @@ def move(data, subset, symbol):
                 res.append(end)
     return sorted(list(set(res)))
 
-def subset_construction(data):
+def nfa_to_dfa(data):
     new_transition = []
     Dstates = [e_closure_s(data, data.initial_state)]
     stack = [e_closure_s(data, data.initial_state)]
@@ -37,16 +37,14 @@ def subset_construction(data):
         T = stack.pop()
         for symbol in data.alphabet:
             U = e_closure_T(data, move(data, T, symbol))
-            if U not in Dstates and len(U) > 0:
-                stack.append(U)
-                Dstates.append(U)
             if len(U) > 0:
+                if U not in Dstates:
+                    stack.append(U)
+                    Dstates.append(U)
                 new_transition.append([tuple(T), symbol, tuple(U)])
-    
+        
     new_accepting_states = []
-
     Dstates = [tuple(states) for states in Dstates]
-
     for states in Dstates:
         if any([y for y in states if y in data.accepting_states]):
             new_accepting_states.append(states)
@@ -60,10 +58,3 @@ def subset_construction(data):
     })
 
     return new_graph
-        
-
-
-data = regex_to_nfa("a+b*")
-data = subset_construction(data)
-print(data)
-data.draw()

@@ -1,4 +1,4 @@
-from AutomataGraph import AutomataGraph
+from .AutomataGraph import AutomataGraph
 
 def and_rule(r: AutomataGraph, s: AutomataGraph):
     clone_r = AutomataGraph(r.__dict__)

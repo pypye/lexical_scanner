@@ -1,6 +1,6 @@
-from RegexParser import regex_parser
-from AutomataGraph import AutomataGraph
-from ThompsonConstruction import and_rule, or_rule, multiplier_rule, plus_rule
+from .RegexParser import regex_parser
+from .AutomataGraph import AutomataGraph
+from .ThompsonConstruction import and_rule, or_rule, multiplier_rule, plus_rule
 
 non_symbols = ['+', '*', '.', '|', '(', ')']
 
