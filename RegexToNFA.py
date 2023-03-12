@@ -34,4 +34,3 @@ def regex_to_nfa(data):
             s.append(ag)
 
     return s[0]
-

@@ -37,13 +37,12 @@ def subset_construction(data):
         T = stack.pop()
         for symbol in data.alphabet:
             U = e_closure_T(data, move(data, T, symbol))
-            if U not in Dstates:
+            if U not in Dstates and len(U) > 0:
                 stack.append(U)
                 Dstates.append(U)
-            new_transition.append([tuple(T), symbol, tuple(U)])
+            if len(U) > 0:
+                new_transition.append([tuple(T), symbol, tuple(U)])
     
-    for x in Dstates:
-        print(x)
     new_accepting_states = []
 
     Dstates = [tuple(states) for states in Dstates]
@@ -64,9 +63,7 @@ def subset_construction(data):
         
 
 
-data = regex_to_nfa("a+")
+data = regex_to_nfa("a+b*")
+data = subset_construction(data)
 print(data)
 data.draw()
-# data = subset_construction(data)
-# print(data)
-# data.draw()

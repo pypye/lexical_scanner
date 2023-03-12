@@ -22,7 +22,7 @@ def make_polish_postfix(regex):
     s = []
     res = ""
     for c in regex:
-        if c not in non_symbols or c == "*":
+        if c not in non_symbols or c == "*" or c == "+":
             res += c
         elif c == ")":
             while len(s) > 0 and s[-1] != "(": res += s.pop()
@@ -41,4 +41,3 @@ def regex_parser(data):
     data = add_concationate(data)
     data = make_polish_postfix(data)
     return data
-
