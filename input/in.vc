@@ -2,7 +2,7 @@ void    function      (
 boolean abc, 
       float b = 12.3e4){
    
-   // đây là 1 chú thích dòng
+   // day la mot chu thich dong
 
    b = .2;
 
@@ -13,15 +13,15 @@ boolean abc,
       literal khi vc k co kieu string";
       if (a < 3.2) {
          return a+ b;
-         /* đây là
-         một chú thích đoạn */
+         /* day la
+         mot chu thich doan */
 
       }
       while (true) {
          return false;
-         /* ra sao nếu 1 // chú thích dòng trong 1 chú thích đoạn */
+         /* ra sao neu // la mot chu thich doan */
 
-         // /* và ngược lại */
+         // /* va nguoc lai */
       }
 
       a;

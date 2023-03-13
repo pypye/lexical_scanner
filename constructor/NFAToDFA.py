@@ -69,5 +69,5 @@ def nfa_to_dfa(data, label=None):
         normalized_dict = {}
         for i, state in enumerate(Dstates):
             normalized_dict[state] = i
-        new_label = {normalized_dict[k]: v for k, v in new_label.items()}
+        new_label = {str(normalized_dict[k]): v for k, v in new_label.items()}
         return new_graph, new_label
