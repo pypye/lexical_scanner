@@ -21,7 +21,7 @@ def dfa_to_minimise_dfa(data):
             if state not in moves:
                 moves[state] = {}
             moves[state][symbol] = move(data, state, symbol)
-        
+            
     state_map = {}
     for state in data.state:
         state_map[state] = state
@@ -35,7 +35,7 @@ def dfa_to_minimise_dfa(data):
     for i in range(len(final_state)):
         for j in range(i+1, len(final_state)):
             if moves[final_state[i]] == moves[final_state[j]]:
-                state_map[final_state[j]] = final_state[i]
+                state_map[final_state[j]] = state_map[final_state[i]]
 
     new_transition = []
     for x in data.transitions:

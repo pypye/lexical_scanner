@@ -29,7 +29,7 @@ def move(data, subset, symbol):
                 res.append(end)
     return sorted(list(set(res)))
 
-def nfa_to_dfa(data):
+def nfa_to_dfa(data, label=None):
     new_transition = []
     Dstates = [e_closure_s(data, data.initial_state)]
     stack = [e_closure_s(data, data.initial_state)]
@@ -44,10 +44,16 @@ def nfa_to_dfa(data):
                 new_transition.append([tuple(T), symbol, tuple(U)])
         
     new_accepting_states = []
+    new_label = {}
     Dstates = [tuple(states) for states in Dstates]
+
     for states in Dstates:
         if any([y for y in states if y in data.accepting_states]):
             new_accepting_states.append(states)
+            if label != None:
+                for y in states:
+                    if y in data.accepting_states:
+                        new_label[states] = label[y]
 
     new_graph = AutomataGraph({
         "alphabet": data.alphabet,
@@ -57,4 +63,11 @@ def nfa_to_dfa(data):
         "transitions": new_transition
     })
 
-    return new_graph
+    if label == None:
+        return new_graph
+    else:
+        normalized_dict = {}
+        for i, state in enumerate(Dstates):
+            normalized_dict[state] = i
+        new_label = {normalized_dict[k]: v for k, v in new_label.items()}
+        return new_graph, new_label
