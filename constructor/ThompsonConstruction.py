@@ -40,7 +40,7 @@ def or_rule(r: AutomataGraph, s: AutomataGraph):
     }
     return AutomataGraph(data)
 
-def multiplier_rule(r):
+def multiplier_rule(r: AutomataGraph):
     clone_r = AutomataGraph(r.__dict__)
     clone_r.normalize_index(start_index=1)
     accepting_state = str(len(clone_r.state) + 1)
@@ -59,7 +59,7 @@ def multiplier_rule(r):
     return AutomataGraph(data)
 
 
-def plus_rule(r):
+def plus_rule(r: AutomataGraph):
     clone_r = AutomataGraph(r.__dict__)
     clone_r.normalize_index(start_index=1)
     accepting_state = str(len(clone_r.state) + 1)
@@ -77,7 +77,7 @@ def plus_rule(r):
     return AutomataGraph(data)
 
 
-def question_rule(r):
+def question_rule(r: AutomataGraph):
     clone_r = AutomataGraph(r.__dict__)
     clone_r.normalize_index(start_index=1)
     accepting_state = str(len(clone_r.state) + 1)
@@ -91,5 +91,24 @@ def question_rule(r):
             ["0", "epsilon", accepting_state],
             [clone_r.accepting_states[0], "epsilon", accepting_state],
         ]
+    }
+    return AutomataGraph(data)
+
+
+def combine(r: AutomataGraph, s: AutomataGraph):
+    clone_r = AutomataGraph(r.__dict__)
+    clone_s = AutomataGraph(s.__dict__)
+    clone_r.normalize_index(start_index=0)
+    clone_s.normalize_index(start_index=len(r.state)-1)
+    for transition in clone_s.transitions:
+        if transition[0] == clone_s.initial_state:
+            transition[0] = clone_r.initial_state
+
+    data = {
+        "alphabet": list(set(clone_r.alphabet + clone_s.alphabet)),
+        "state": sorted(list(set(clone_r.state + clone_s.state))),
+        "initial_state": clone_r.initial_state,
+        "accepting_states": clone_r.accepting_states + clone_s.accepting_states,
+        "transitions": clone_r.transitions + clone_s.transitions
     }
     return AutomataGraph(data)
