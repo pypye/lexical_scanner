@@ -36,7 +36,7 @@ def dfa_to_minimise_dfa(data):
         for j in range(i+1, len(final_state)):
             if moves[final_state[i]] == moves[final_state[j]]:
                 state_map[final_state[j]] = final_state[i]
-    print(state_map)
+
     new_transition = []
     for x in data.transitions:
         start = x[0]

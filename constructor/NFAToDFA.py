@@ -1,8 +1,8 @@
 from .RegexToNFA import regex_to_nfa
 from .AutomataGraph import AutomataGraph
 
-def e_closure_s(data, state, symbol='E'):
-    res = [state] if symbol == 'E' else []
+def e_closure_s(data, state, symbol="epsilon"):
+    res = [state] if symbol == "epsilon" else []
     for x in data.transitions:
         start = x[0]
         sym = x[1]

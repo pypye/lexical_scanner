@@ -1,31 +1,27 @@
-from AutomataGraph import AutomataGraph
-from ThompsonConstruction import and_rule, or_rule, multiplier_rule, plus_rule
+from vc_token import VCTokenSet
+from constructor.AutomataGraphContrustor import automata_graph_contructor
+from constructor.ThompsonConstruction import and_rule
+from constructor.AutomataGraph import AutomataGraph
 
-x = AutomataGraph({
-    "alphabet": ["a", "b"],
-    "state": [0, 1, 4, 3],
-    "initial_state": 0,
-    "accepting_states": [3],
-    "transitions": [
-        [0, "a", 1],
-        [1, "a", 3],
-        [0, "b", 4],
-        [4, "b", 3]
-    ]
-})
-y = AutomataGraph({
-    "alphabet": ["a", "b"],
-    "state": [0, 1, 4, 3],
-    "initial_state": 0,
-    "accepting_states": [3],
-    "transitions": [
-        [0, "a", 1],
-        [1, "a", 3],
-        [0, "b", 4],
-        [4, "b", 3]
-    ]
-})
+def build_automata_graph_from_vc_regex():
+    # graph = []
+    # for token in VCTokenSet.__dict__:
+    #     if '__' not in token:
+    #         subgraph = automata_graph_contructor(VCTokenSet.__dict__[token])
+    #         graph.append(subgraph)
 
-z = multiplier_rule(x)
-print(z)
-z.draw()
+    # final_graph = graph[0]
+    # for i in range(1, len(graph)):
+    #     final_graph = or_rule(final_graph, graph[i])
+
+    # final_graph = nfa_to_dfa(final_graph)
+    # final_graph = dfa_to_minimise_dfa(final_graph)
+    # final_graph.draw()
+    automata_graph_contructor(VCTokenSet.FLOATLITERAL).draw()
+build_automata_graph_from_vc_regex()
+
+
+# from constructor.RegexToNFA import regex_to_nfa
+
+# data = regex_to_nfa("((E|e)(plus|minus)?(digit)+)")
+# data.draw()

@@ -42,7 +42,7 @@ class AutomataGraph():
         self.graph.node('')
         self.graph.edge('', self.initial_state)
         for x in self.transitions:
-            self.graph.edge(x[0], x[2], label=('ε', x[1])[x[1] != 'E'])
+            self.graph.edge(x[0], x[2], label=('ε', x[1])[x[1] != 'epsilon'])
         
         self.graph.render('nfa', view=True)
  

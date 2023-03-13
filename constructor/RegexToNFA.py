@@ -1,8 +1,8 @@
 from .RegexParser import regex_parser
 from .AutomataGraph import AutomataGraph
-from .ThompsonConstruction import and_rule, or_rule, multiplier_rule, plus_rule
+from .ThompsonConstruction import and_rule, or_rule, multiplier_rule, plus_rule, question_rule
 
-non_symbols = ['+', '*', '.', '|', '(', ')']
+non_symbols = ['+', '*', '.', '|', '?', '(', ')']
 
 def regex_to_nfa(data):
     postfix_data = regex_parser(data)
@@ -30,6 +30,9 @@ def regex_to_nfa(data):
                 s = s[:-1]
             elif x == "+":
                 ag = plus_rule(s[-1])
+                s = s[:-1]
+            elif x == "?":
+                ag = question_rule(s[-1])
                 s = s[:-1]
             s.append(ag)
 
