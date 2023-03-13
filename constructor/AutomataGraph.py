@@ -1,13 +1,14 @@
 from graphviz import Digraph
 
 class AutomataGraph():
-    def __init__(self, data):
+    def __init__(self, data, normalize=True):
         self.alphabet = data["alphabet"]
         self.state = data["state"]
         self.initial_state = data["initial_state"]
         self.accepting_states = data["accepting_states"]
         self.transitions = data["transitions"]
-        self.normalize_index()
+        if normalize:
+            self.normalize_index()
 
         
     def normalize_index(self, start_index=0):

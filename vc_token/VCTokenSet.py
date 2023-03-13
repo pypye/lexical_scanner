@@ -9,11 +9,11 @@ SEPARATOR="semicolon|comma|left_parenthesis|right_parenthesis|left_bracket|right
 
 INTLITERAL="digit(digit)*"
 
-FRACTION = "(dot)(digit)+"
-EXPONENT = "(E|e)(plus|minus)?(digit)+"
-FLOATLITERAL=f"((digit)*({FRACTION})({EXPONENT}))" \
+__FRACTION__ = "(dot)(digit)+"
+__EXPONENT__ = "(E|e)(plus|minus)?(digit)+"
+FLOATLITERAL=f"((digit)*({__FRACTION__})({__EXPONENT__}))" \
              f"|((digit)+(dot))"\
-             f"|((digit)+(dot)?({EXPONENT}))"
+             f"|((digit)+(dot)?({__EXPONENT__}))"
 
 BOOLEANLITERAL="true|false"
 STRINGLITERAL="(double_quote)(character|digit|space)*(double_quote)"

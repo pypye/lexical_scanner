@@ -104,11 +104,13 @@ def combine(r: AutomataGraph, s: AutomataGraph):
         if transition[0] == clone_s.initial_state:
             transition[0] = clone_r.initial_state
 
+    clone_s.state.remove(clone_s.initial_state)
+
     data = {
         "alphabet": list(set(clone_r.alphabet + clone_s.alphabet)),
-        "state": sorted(list(set(clone_r.state + clone_s.state))),
+        "state": clone_r.state + clone_s.state,
         "initial_state": clone_r.initial_state,
         "accepting_states": clone_r.accepting_states + clone_s.accepting_states,
         "transitions": clone_r.transitions + clone_s.transitions
     }
-    return AutomataGraph(data)
+    return AutomataGraph(data, normalize=False)
