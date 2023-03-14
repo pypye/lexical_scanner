@@ -1,4 +1,4 @@
-IDENTIFIER="character(character|digit)*"
+IDENTIFIER="((character|e|E)((character|e|E)|digit)*"
 KEYWORD="boolean|break|continue|else|for|float|if|int|return|void|while"
 ARITHMETIC="plus|minus|multiply|divide"
 RELATIONAL="less|less_equal|greater|greater_equal"
@@ -16,6 +16,6 @@ FLOATLITERAL=f"((digit)*({__FRACTION__})({__EXPONENT__})?)" \
              f"|((digit)+(dot)?({__EXPONENT__}))"
 
 BOOLEANLITERAL="true|false"
-STRINGLITERAL="(double_quote)(character|digit|space)*(double_quote)"
+STRINGLITERAL="(double_quote)((character|e|E)|digit|space)*(double_quote)"
 
 SPACE="space(space)*"

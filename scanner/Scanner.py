@@ -1,6 +1,6 @@
 class Scanner():
     def __init__(self, path):
-        self.file_char = open(path, 'r', encoding='utf-8')
+        self.file_char = open(path, 'r', encoding='utf-8').read()
         self.file_word = open(path, 'r', encoding='utf-8')
         self.count_char = 0
         self.count_word = 0
@@ -24,13 +24,12 @@ class Scanner():
     
     
     def peek_char(self):
-        char = self.file_char.read(1)
-        self.count_char += 1
+        char = self.file_char[self.count_char]
         return char        
 
-    def repeek_char(self):
-        self.count_char -= 1
-        self.file_char.seek(self.count_char)        
+    def seek_char(self):
+        self.count_char += 1 
+        return self.count_char < len(self.file_char)     
     
     def seek_char_to_current_word(self):
         self.file_char.seek(self.count_word)
