@@ -26,7 +26,11 @@ class Scanner():
     def peek_char(self):
         char = self.file_char.read(1)
         self.count_char += 1
-        return char                 
+        return char        
+
+    def repeek_char(self):
+        self.count_char -= 1
+        self.file_char.seek(self.count_char)        
     
     def seek_char_to_current_word(self):
         self.file_char.seek(self.count_word)

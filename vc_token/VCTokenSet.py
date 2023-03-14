@@ -11,10 +11,11 @@ INTLITERAL="digit(digit)*"
 
 __FRACTION__ = "(dot)(digit)+"
 __EXPONENT__ = "(E|e)(plus|minus)?(digit)+"
-FLOATLITERAL=f"((digit)*({__FRACTION__})({__EXPONENT__}))" \
+FLOATLITERAL=f"((digit)*({__FRACTION__})({__EXPONENT__})?)" \
              f"|((digit)+(dot))"\
              f"|((digit)+(dot)?({__EXPONENT__}))"
 
 BOOLEANLITERAL="true|false"
 STRINGLITERAL="(double_quote)(character|digit|space)*(double_quote)"
 
+SPACE="space(space)*"

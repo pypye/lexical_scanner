@@ -11,14 +11,11 @@ scanner = Scanner("input/in.vc")
 token = json.load(open('vc_token/VCTokenDefinition.json'))
 state = "0"
 current_word = ""
-# a = "="
-# print(a in token.keys())
-# print(token[a])
+
 while True:
     if state == None:
         print("Error")
         break
-
 
     char = scanner.peek_char()
     if char.isalpha():
@@ -30,9 +27,11 @@ while True:
     else:
         next_state = traveller.move(state, char)
 
-    if traveller.check_end(next_state):
-        print(current_word, traveller.get_end(next_state))
+    if next_state == None and traveller.check_end(state):
+        if traveller.get_end(state) != "SPACE":
+            print(current_word, traveller.get_end(state))
         current_word = ""
+        scanner.repeek_char()
         state = "0"
     else:
         current_word += char

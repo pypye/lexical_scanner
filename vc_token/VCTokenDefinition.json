@@ -24,5 +24,7 @@
     ".": "dot",
     ":": "colon",
     " ": "space",
+    "\n": "space",
+    "\t": "space",
     "\"": "double_quote"
 }
