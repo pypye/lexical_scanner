@@ -1,4 +1,4 @@
-# from graphviz import Digraph
+from graphviz import Digraph
 
 class AutomataGraph():
     def __init__(self, data, normalize=True):

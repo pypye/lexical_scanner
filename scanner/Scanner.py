@@ -1,26 +1,38 @@
+import re
 class Scanner():
     def __init__(self, path):
         self.file_char = open(path, 'r', encoding='utf-8').read()
-        self.file_word = open(path, 'r', encoding='utf-8')
         self.count_char = 0
-        self.count_word = 0
-    
+        self.remove_comment()
+
+    def remove_comment(self):
+        iniline_comment_pattern = re.compile(r'//.*')
+        multiline_comment_pattern = re.compile(r'/\*.*?\*/', re.DOTALL)
+        self.file_char = re.sub(iniline_comment_pattern, '', self.file_char)
+        self.file_char = re.sub(multiline_comment_pattern, '', self.file_char)
+
     def peek_word(self):
         word = ""
-        while True:
-            char = self.file_word.read(1)
-            self.count_word += 1
+        count_char = self.count_char
+
+        while count_char < len(self.file_char):
+            char = self.file_char[count_char]
             if char in [' ', '\t', '\n']: break
+            count_char += 1
             word += char
         
-        while True:
-            char = self.file_word.read(1)
-            self.count_word += 1
+        while count_char < len(self.file_char):
+            char = self.file_char[count_char]
             if char not in [' ', '\t', '\n']: break
-
-        self.count_word -= 1
-        self.file_word.seek(self.count_word)
+            count_char += 1
         return word
+    
+    def seek_word(self):
+        while self.count_char < len(self.file_char):
+            char = self.file_char[self.count_char]
+            if char in [' ', '\t', '\n']: break
+            self.count_char += 1
+        return self.count_char < len(self.file_char)
     
     
     def peek_char(self):
@@ -29,8 +41,5 @@ class Scanner():
 
     def seek_char(self):
         self.count_char += 1 
-        return self.count_char < len(self.file_char)     
+        return self.count_char < len(self.file_char)
     
-    def seek_char_to_current_word(self):
-        self.file_char.seek(self.count_word)
-        self.count_char = self.count_word

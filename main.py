@@ -5,29 +5,34 @@ import json
 
 graph = build_automata_graph_from_vc_regex()
 traveller = GraphTraveller(graph[0], graph[1])
+# graph[0].draw()
 
 
-scanner = Scanner("input/in.vc")
+scanner = Scanner("input/example_fib.vc")
 token = json.load(open('vc_token/VCTokenDefinition.json'))
 state = "0"
 current_word = ""
 
 def find_next_state(state, char):
-    next_state = None
-    if char.isalpha() and char != 'e' and char != 'E':
-        next_state = traveller.move(state, "character")
-    elif char.isdigit():
-        next_state = traveller.move(state, "digit")
-    elif char in token.keys():
-        next_state = traveller.move(state, token[char])
-    else:
-        next_state = traveller.move(state, char)
-    return next_state
+    for tk in token.keys():
+        if char in token[tk]:
+            return traveller.move(state, tk)
+    return traveller.move(state, "other")
 
 while True:
     if state == None:
         print("Error")
         break
+
+    word = scanner.peek_word()
+    next_state = find_next_state(state, word)
+    if traveller.check_end(next_state):
+        print(current_word + word, traveller.get_end(next_state))
+        current_word = ""
+        state = "0"
+        if not scanner.seek_word():
+            break
+        continue
 
     char = scanner.peek_char()
     next_state = find_next_state(state, char)
