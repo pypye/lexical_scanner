@@ -1,54 +1,22 @@
 from graph.GraphFromVCRegex import build_automata_graph_from_vc_regex
 from graph.GraphTraveller import GraphTraveller
 from scanner.Scanner import Scanner
+from scanner.ScannerFromFile import scan
 import json
+import os
 
-graph = build_automata_graph_from_vc_regex()
-traveller = GraphTraveller(graph[0], graph[1])
-# graph[0].draw()
+def generate_token(file):
+    os.makedirs(f"output/{file}", exist_ok=True)
+    graph = build_automata_graph_from_vc_regex()
+    graph[0].export_graph(f"output/{file}/graph.dat", graph[1])
+    print("[+] Export graph done")
+    graph[0].export_table(f"output/{file}/table.dat")
+    print("[+] Export table done")
+    traveller = GraphTraveller(graph[0], graph[1])
+    scanner = Scanner(f"input/{file}.vc")
+    token = json.load(open('vc_token/VCTokenDefinition.json'))
+    scan(traveller, scanner, token, vctok_path=f"output/{file}/{file}.vctok", vctok_verbose_path=f"output/{file}/{file}.verbose.vctok")
+    print("[+] Generate token done")
 
 
-scanner = Scanner("input/example_fib.vc")
-token = json.load(open('vc_token/VCTokenDefinition.json'))
-state = "0"
-current_word = ""
-
-def find_next_state(state, char):
-    for tk in token.keys():
-        if char in token[tk]:
-            return traveller.move(state, tk)
-    return traveller.move(state, "other")
-
-while True:
-    if state == None:
-        print("Error")
-        break
-
-    word = scanner.peek_word()
-    next_state = find_next_state(state, word)
-    if traveller.check_end(next_state):
-        print(current_word + word, traveller.get_end(next_state))
-        current_word = ""
-        state = "0"
-        if not scanner.seek_word():
-            break
-        continue
-
-    char = scanner.peek_char()
-    next_state = find_next_state(state, char)
-    
-    if next_state == None and traveller.check_end(state):
-        if traveller.get_end(state) != "SPACE":
-            print(current_word, traveller.get_end(state))
-        current_word = ""
-        state = "0"
-    else:
-        current_word += char
-        state = next_state 
-        if not scanner.seek_char():
-            break
-
-next_state = find_next_state(state, char)
-if next_state == None and traveller.check_end(state):
-    if traveller.get_end(state) != "SPACE":
-        print(current_word, traveller.get_end(state))
+generate_token("in")

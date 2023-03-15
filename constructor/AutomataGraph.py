@@ -1,4 +1,5 @@
 from graphviz import Digraph
+from markdownTable import markdownTable
 
 class AutomataGraph():
     def __init__(self, data, normalize=True):
@@ -46,4 +47,40 @@ class AutomataGraph():
             self.graph.edge(x[0], x[2], label=('ε', x[1])[x[1] != 'epsilon'])
         
         self.graph.render('nfa', view=True)
- 
+
+
+    def export_graph(self, path, end_state_name):
+        f = open(path, 'w')
+        for key in self.__dict__.keys():
+            print(key.upper(), file=f)
+            if key == 'transitions':
+                for x in self.transitions:
+                    print(f"{x[0]} {x[1]} {x[2]}", file=f)
+            elif key == 'accepting_states':
+                for x in self.accepting_states:
+                    print(x, end_state_name[x], file=f)
+            else:
+                for x in self.__dict__[key]:
+                    print(x, file=f)
+            print("", file=f)
+
+    def export_table(self, path):
+        f = open(path, 'w')
+        map = {}
+        for x in self.transitions:
+            if x[0] not in map:
+                map[x[0]] = {}
+            map[x[0]][x[1]] = x[2]
+
+        data = []
+        for x in self.state:
+            if x in map:
+                row = {}
+                row['state'] = x
+                for y in self.alphabet:
+                    if y in map[x]:
+                        row[y] = map[x][y]
+                    else:
+                        row[y] = ''
+                data.append(row)
+        print(markdownTable(data).getMarkdown(), file=f)

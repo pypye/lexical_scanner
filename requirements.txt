@@ -1,1 +1,3 @@
 graphviz
+numpy
+py-markdown-table
