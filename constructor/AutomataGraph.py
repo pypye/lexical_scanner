@@ -1,4 +1,4 @@
-from graphviz import Digraph
+# from graphviz import Digraph
 from markdownTable import markdownTable
 
 class AutomataGraph():
@@ -30,23 +30,23 @@ class AutomataGraph():
         ans += "Transitions: " + str(self.transitions) + "\n"
         return ans
     
-    def draw(self):
-        self.graph = Digraph()
-        for x in self.state:
-            if (x not in self.accepting_states):
-                self.graph.attr('node', shape='circle')
-                self.graph.node(x)
-            else:
-                self.graph.attr('node', shape='doublecircle')
-                self.graph.node(x)
+    # def draw(self):
+    #     self.graph = Digraph()
+    #     for x in self.state:
+    #         if (x not in self.accepting_states):
+    #             self.graph.attr('node', shape='circle')
+    #             self.graph.node(x)
+    #         else:
+    #             self.graph.attr('node', shape='doublecircle')
+    #             self.graph.node(x)
 
-        self.graph.attr('node', shape='none')
-        self.graph.node('')
-        self.graph.edge('', self.initial_state)
-        for x in self.transitions:
-            self.graph.edge(x[0], x[2], label=('ε', x[1])[x[1] != 'epsilon'])
+    #     self.graph.attr('node', shape='none')
+    #     self.graph.node('')
+    #     self.graph.edge('', self.initial_state)
+    #     for x in self.transitions:
+    #         self.graph.edge(x[0], x[2], label=('ε', x[1])[x[1] != 'epsilon'])
         
-        self.graph.render('nfa', view=True)
+    #     self.graph.render('nfa', view=True)
 
 
     def export_graph(self, path, end_state_name):
