@@ -13,7 +13,7 @@ class Scanner():
 
         while count_char < len(self.file_char):
             char = self.file_char[count_char]
-            if char in [' ', '\t', '\n']: break
+            if not char.isalpha(): break
             count_char += 1
             word += char
         
@@ -22,7 +22,7 @@ class Scanner():
     def seek_word(self):
         while self.count_char < len(self.file_char):
             char = self.file_char[self.count_char]
-            if char in [' ', '\t', '\n']: 
+            if not char.isalpha(): 
                 break
             self.count_char += 1
             self.count_col += 1

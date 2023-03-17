@@ -15,7 +15,7 @@ FLOATLITERAL=f"((digit)*({__FRACTION__})({__EXPONENT__})?)" \
              f"|((digit)+(dot)?({__EXPONENT__}))"
 
 BOOLEANLITERAL="boolean"
-STRINGLITERAL=f"(double_quote)(character|exponent|digit|space|separator|arithmetic_1|arithmetic_2|relational|logical|equality|assignment|separator|dot|eof|other)*(double_quote)"
+STRINGLITERAL=f"(double_quote)(character|exponent|digit|space|separator|arithmetic_1|arithmetic_2|relational|logical|equality|assignment|separator|dot|other)*(double_quote)"
 
 SPACE="space(space)*"
 EOF="eof"

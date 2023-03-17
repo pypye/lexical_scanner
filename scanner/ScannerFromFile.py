@@ -71,7 +71,10 @@ def scan(traveller, scanner, token, vctok_path, vctok_verbose_path):
         if next_state == None and traveller.check_end(state):
             if traveller.get_end(state) != "SPACE":
                 output_vctok(traveller, vc_tok, vc_tok_verbose, state, current_word, scanner, type='backward')
+            state = "0"
 
-    next_state = find_next_state(traveller, token, "0", "$")
+    next_state = find_next_state(traveller, token, state, "__eof__")
     if traveller.check_end(next_state):
         output_vctok(traveller, vc_tok, vc_tok_verbose, next_state, "$", scanner, type='forward')
+    else:
+        raise Exception(f'Invalid token for "{current_word}" at line {scanner.count_line}, col {scanner.count_col}')
