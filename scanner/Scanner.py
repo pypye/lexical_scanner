@@ -46,7 +46,7 @@ class Scanner():
 
     def remove_comment(self):
         if self.file_char[self.count_char:self.count_char+2] == '//':
-            while self.file_char[self.count_char] != '\n':
+            while self.count_char < len(self.file_char) and self.file_char[self.count_char] != '\n':
                 self.count_char += 1
                 self.count_col += 1
             self.count_line += 1
@@ -54,7 +54,7 @@ class Scanner():
             self.count_col = 1
 
         elif self.file_char[self.count_char:self.count_char+2] == '/*':
-            while self.file_char[self.count_char:self.count_char+2] != '*/':
+            while self.count_char+1 < len(self.file_char) and self.file_char[self.count_char:self.count_char+2] != '*/':
                 if self.file_char[self.count_char] == '\n':
                     self.count_line += 1
                     self.count_col = 0
